@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h3 class="h3 text-dark">{{ task.task_name }}</h3>
+          <p class="text-secondary">{{ task.info }}</p>
+        </div>
+      </div>
+      <div class="d-flex border-bottom mb-4">
+        <a
+          href="{% url 'tasks:task_detail' task.pk %}"
+          class="flex-fill text-primary pb-2"
+        >
+          Overview
+        </a>
+
+        <a
+          href="{% url 'tasks:task_update' task.pk %}"
+          class="flex-fill text-secondary pb-2"
+        >
+          Update Details
+        </a>
+      </div>
+      <div class="d-flex border-top py-2">
+        <span class="text-secondary" style="padding-right: 40px">Task:</span>
+        <span class="text-dark">{{ task.task_name }}</span>
+      </div>
+      <div class="d-flex border-top py-2">
+        <span class="text-secondary" style="padding-right: 40px">Agent:</span>
+        <span class="ml-auto text-dark">{{ task.agent }}</span>
+      </div>
+      <div class="d-flex border-top border-bottom py-2 mb-4">
+        <span class="text-secondary" style="padding-right: 40px">Info:</span>
+        <span class="ml-auto text-dark" style="padding-right: 40px"
+          >{{ task.info }}</span
+        >
+      </div>
+      <div class="d-flex border-top border-bottom py-2 mb-4">
+        <span class="text-secondary" style="padding-right: 40px">Status:</span>
+      </div>
+      <div class="d-flex border-top border-bottom py-2 mb-4">
+        <span class="text-secondary" style="padding-right: 40px">ساختمان:</span>
+      </div>
+
+      <hr />
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}{% block content %}{% load crispy_forms_tags %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <h2 class="text-muted small">{{ agent.user.username }}</h2>
+        <h1 class="text-dark display-4 mb-4">{{ agent.user.last_name }}</h1>
+        <ul class="nav nav-tabs mb-4">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'agents:agent_detail' agent.pk %}">
+              Overview
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              href="{% url 'agents:agent_update' agent.pk %}"
+            >
+              Edit Info
+            </a>
+          </li>
+        </ul>
+        <!-- Form Start -->
+        <form method="post">
+          {% csrf_token %} {{ form|crispy }}
+
+          <!-- Buttons -->
+          <div class="d-flex mb-4">
+            <button type="submit" class="btn btn-primary">Update</button>
+            
+              <!-- SVG or Font Awesome icon can be used here -->
+              <i class="fas fa-heart"></i>
+              <!-- This uses Font Awesome's heart icon -->
+            </button>
+          </div>
+        </form>
+        <!-- Form End -->
+
+        <!-- Delete Link -->
+        <div class="d-flex justify-content-end">
+          <a
+            href="{% url 'agents:agent_delete' agent.pk %}"
+            class="btn btn-danger"
+            >Delete</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

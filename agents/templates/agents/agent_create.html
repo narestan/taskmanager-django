@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% load crispy_forms_tags %}
+
+
+{% block content %}
+  <a href="{% url 'agents:agent_list' %}"> back to list </a>
+  <div class="container">
+    <h1>Create a New Agent</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit">submit</button>
+  </div>
+
+{% endblock %}

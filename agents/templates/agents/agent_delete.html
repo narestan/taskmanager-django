@@ -1,0 +1,11 @@
+{% extends "base.html" %} {% block content %}
+<a href="{% url 'agents:agent_list' %}"> back to list </a>
+<div class="container">
+  <h2>Are you sure you want to delete "{{ object }}"?</h2>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+    <a href="{% url 'tasks:task_list' %}">Cancel</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %} {% block content %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <h2 class="text-muted small">AGENT</h2>
+        <h1 class="text-dark display-4 mb-4">{{ agent.user.last_name }}</h1>
+        <ul class="nav nav-tabs mb-4">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              href="{% url 'agents:agent_detail' agent.pk %}"
+            >
+              Overview
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'agents:agent_update' agent.pk %}">
+              Edit Info
+            </a>
+          </li>
+        </ul>
+        <div class="mb-3">
+          <span class="text-muted">First Name:</span>
+          <span class="float-right text-dark">
+            {{ agent.user.first_name }}
+          </span>
+        </div>
+        <div class="mb-3">
+          <span class="text-muted">Last Name:</span>
+          <span class="float-right text-dark">
+            {{ agent.user.last_name }}
+          </span>
+        </div>
+        <div class="mb-3">
+          <span class="text-muted">Position:</span>
+          <span class="float-right text-dark"> {{ agent.user.position }} </span>
+        </div>
+
+        <div class="mb-3">
+          <span class="text-muted">Mobile Number:</span>
+          <span class="float-right text-dark"
+            >{{ agent.user.mobile_number}}</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

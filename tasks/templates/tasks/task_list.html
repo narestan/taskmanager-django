@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container mt-5">
+  <div class="row justify-content-between mb-3">
+    <div class="col-auto">
+      <h1>List of Tasks</h1>
+    </div>
+    {% if request.user.is_organisor %}
+    <div class="col-auto">
+      <a href="{% url 'tasks:task_create' %}" class="btn btn-primary">
+        Create a new Task
+      </a>
+    </div>
+    {% endif %}
+  </div>
+  <hr />
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+    {% for task in tasks %}
+    <div class="col">
+      <div class="card mb-3" style="width: 18rem">
+        <div class="card-body">
+          <h5 class="card-title">{{ task.task_name }}</h5>
+          <p class="card-text">{{ task.agent }}</p>
+          <p class="card-text">{{ task.explain_task }}</p>
+          <a
+            href="{% url 'tasks:task_detail' task.pk %}"
+            class="btn btn-secondary"
+            >more...</a
+          >
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
