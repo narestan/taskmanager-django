@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block content %}{% load crispy_forms_tags %}
+
+<section class="text-gray-700 body-font overflow-hidden">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <h2 class="text-muted small">task</h2>
+        <h1 class="h3 mb-4">{{ task.task_name }}</h1>
+        <ul class="nav nav-tabs mb-4">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'tasks:task_detail' task.pk %}"
+              >Overview</a
+            >
+          </li>
+          {% comment %}
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="{% url 'tasks:task_category-update' task.pk %}"
+              >Category</a
+            >
+          </li>
+          {% endcomment %}
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              href="{% url 'tasks:task_update' task.pk %}"
+              >Update Details</a
+            >
+          </li>
+        </ul>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %} {{ form|crispy }}
+          <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+        <div class="mt-5 pt-5 border-top">
+          <a href="{% url 'tasks:task_delete' task.pk %}" class="btn btn-danger"
+            >Delete</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

@@ -16,7 +16,12 @@
         >
           Overview
         </a>
-
+        <a
+          href="{% url 'tasks:task-category-update' task.pk %}"
+          class="flex-fill text-secondary pb-2"
+        >
+          Category
+        </a>
         <a
           href="{% url 'tasks:task_update' task.pk %}"
           class="flex-fill text-secondary pb-2"
@@ -24,30 +29,89 @@
           Update Details
         </a>
       </div>
-      <div class="d-flex border-top py-2">
-        <span class="text-secondary" style="padding-right: 40px">Task:</span>
-        <span class="text-dark">{{ task.task_name }}</span>
-      </div>
-      <div class="d-flex border-top py-2">
+
+      <div class="d-flex py-2">
         <span class="text-secondary" style="padding-right: 40px">Agent:</span>
         <span class="ml-auto text-dark">{{ task.agent }}</span>
       </div>
-      <div class="d-flex border-top border-bottom py-2 mb-4">
+      <div class="d-flex border-top b py-2 mb-4">
         <span class="text-secondary" style="padding-right: 40px">Info:</span>
         <span class="ml-auto text-dark" style="padding-right: 40px"
-          >{{ task.info }}</span
+          >{{ task.info}}</span
+        >
+      </div>
+      <div class="d-flex border-top py-2">
+        <span class="text-secondary" style="padding-right: 40px">Status:</span>
+        <span class="ml-auto text-dark" style="padding-right: 40px"
+          >{{ task.category }}</span
         >
       </div>
       <div class="d-flex border-top border-bottom py-2 mb-4">
-        <span class="text-secondary" style="padding-right: 40px">Status:</span>
-      </div>
-      <div class="d-flex border-top border-bottom py-2 mb-4">
         <span class="text-secondary" style="padding-right: 40px">ساختمان:</span>
+        <span class="ml-auto text-dark" style="padding-right: 40px"
+          >{{ task.project }}</span
+        >
       </div>
-
+      <a
+        href="{% url 'tasks:task-followup-create' task.pk %}"
+        class="btn btn-primary mb-3"
+        >Add a followup</a
+      >
       <hr />
+
+      <div>
+        {% for followup in task.followups.all %}
+        <div class="shadow-sm p-4 mb-4">
+          <div class="row">
+            <div class="col-md-3">
+              <dt class="text-secondary">
+                Notes (<a
+                  href="{% url 'tasks:task-followup-update' followup.pk %}"
+                  class="text-primary"
+                  >update</a
+                >)
+                <div class="row">
+                  <div class="col">
+                    <form
+                      action="{% url 'tasks:task-followup-delete' followup.pk %}"
+                      method="post"
+                    >
+                      {% csrf_token %}
+                      <button
+                        type="submit"
+                        class="btn btn-danger"
+                        onclick="return confirm('Are you sure you want to delete this follow-up?');"
+                      >
+                        Delete
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </dt>
+            </div>
+            <div class="col-md-9">
+              <dd class="text-dark">{{ followup.notes }}</dd>
+            </div>
+          </div>
+          {% if followup.file %}
+          <div class="row mt-3">
+            <div class="col-md-3">
+              <dt class="text-secondary">Attachments</dt>
+            </div>
+            <div class="col-md-9">
+              <dd class="text-dark">
+                <a href="{{ followup.file.url }}" download class="text-primary">
+                  {{ followup.file.name }}
+                </a>
+              </dd>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
     </div>
   </div>
-</div>
 
-{% endblock content %}
+  {% endblock content %}
+</div>

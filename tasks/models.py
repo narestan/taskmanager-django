@@ -40,6 +40,9 @@ class Task(models.Model):
     created_at = models.DateField(auto_now_add=True)
     date_start = models.DateField(null=True, blank=True)
     date_end = models.DateField(null=True, blank=True)
+    category = models.ForeignKey(
+        "Category", related_name="tasks", null=True, blank=True, on_delete=models.SET_NULL)
+    converted_date = models.DateTimeField(null=True, blank=True)
     objects = TaskManager()
 
     def __str__(self):
@@ -67,3 +70,30 @@ def post_user_created_signal(sender, instance, created, **kwargs):
 
 
 post_save.connect(post_user_created_signal, sender=User)
+
+# Add follow up for Task
+
+
+def handle_upload_follow_ups(instance, filename):
+    return f"task_followups/task_{instance.task.pk}/{filename}"
+
+
+class FollowUp(models.Model):
+    task = models.ForeignKey(
+        Task, related_name="followups", on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
+    notes = models.TextField(blank=True, null=True)
+    file = models.FileField(null=True, blank=True,
+                            upload_to=handle_upload_follow_ups)
+
+    def __str__(self):
+        return f"{self.task.task_name} "
+
+
+class Category(models.Model):
+    # New, Contacted, Converted, Unconverted
+    name = models.CharField(max_length=30)
+    organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
