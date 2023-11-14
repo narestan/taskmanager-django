@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
+from projects.models import Project
 
 
 class User(AbstractUser):
@@ -43,6 +44,8 @@ class Task(models.Model):
     category = models.ForeignKey(
         "Category", related_name="tasks", null=True, blank=True, on_delete=models.SET_NULL)
     converted_date = models.DateTimeField(null=True, blank=True)
+    project = models.ForeignKey(
+        Project, on_delete=models.SET_NULL, null=True)
     objects = TaskManager()
 
     def __str__(self):

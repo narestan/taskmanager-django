@@ -1,5 +1,6 @@
 from django import forms
 from tasks.models import Task, Agent, Category, FollowUp
+from projects.models import Project
 
 
 class TaskModelForm(forms.ModelForm):
@@ -34,6 +35,9 @@ class TaskCategoryUpdateForm(forms.ModelForm):
         fields = (
             'category',
         )
+        labels = {
+            'project': 'Project Name',
+        }
 
 
 class CategoryModelForm(forms.ModelForm):

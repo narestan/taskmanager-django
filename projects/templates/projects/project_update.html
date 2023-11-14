@@ -1,0 +1,65 @@
+{% extends "base.html" %} {% block content %}
+<section class="bg-light py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <h6 class="text-muted">Project</h6>
+        <h1 class="text-dark display-5 mb-4">
+          {{ project.name }}
+        </h1>
+        <ul class="nav nav-tabs mb-4">
+          
+          <li class="nav-item">
+            <a
+              class="nav-link text-muted"
+              href="{% url 'projects:project_detail' project.pk %}"
+              >Description</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active text-primary" href="#">Update</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-muted" href="#">Details</a>
+          </li>
+        </ul>
+        <p class="mb-4">
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+        </p>
+
+        
+
+        <div class="d-flex">
+          <button  type="submit">Update</button>
+          <button class="btn btn-light ml-3">
+            <!-- SVG or Font Awesome icon can be used here -->
+            <i class="fas fa-heart"></i>
+            <!-- This uses Font Awesome's heart icon -->
+          </button>
+        </div>
+        <div class="d-flex justify-content-end">
+          <a href="{% url 'projects:project_delete' project.pk %}">Delete</a>
+
+        
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <img
+          src="https://dummyimage.com/400x400"
+          alt="ecommerce"
+          class="img-fluid rounded"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+
+
+
+
