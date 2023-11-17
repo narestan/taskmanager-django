@@ -6,10 +6,16 @@ class Project(models.Model):
     floor_number = models.PositiveIntegerField()
     apartment_number = models.PositiveIntegerField()
     address = models.CharField(max_length=255)
-    document = models.FileField(
-        upload_to='project_documents/', blank=True, null=True)
+    # document = models.FileField(
+    #     upload_to='project_documents/', blank=True, null=True)
     # You can add more fields as required
     # Adding Jalali Date fields
 
     def __str__(self):
         return self.name
+
+
+class Document(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    document = models.FileField(upload_to='documents/', blank=True, null=True)

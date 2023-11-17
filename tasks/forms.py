@@ -6,14 +6,22 @@ from projects.models import Project
 class TaskModelForm(forms.ModelForm):
     class Meta:
         model = Task
-        field = '__all__'
-        exclude = ['created_at']
+        fields = (
+            'task_name',
+            'info',
+            'agent',
+            'date_start',
+            'date_end',
+            'category',
+            'project',
 
-    def clean_first_name(self):
-        data = self.cleaned_data["first_name"]
-        # if data != "Joe":
-        #     raise ValidationError("Your name is not Joe")
-        return data
+        )
+
+    # def clean_first_name(self):
+    #     data = self.cleaned_data["first_name"]
+    #     # if data != "Joe":
+    #     #     raise ValidationError("Your name is not Joe")
+    #     return data
 
     def clean(self):
         pass

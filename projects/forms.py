@@ -1,13 +1,17 @@
 from django import forms
-from projects.models import Project
+from projects.models import Project, Document
 
 
 class ProjectModelForm(forms.ModelForm):
     class Meta:
         model = Project
+        fields = '__all__'
+
+
+class DocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
         fields = (
-            'name',
-            'floor_number',
-            'apartment_number',
-            'address',
+            'title',
+            'document',
         )

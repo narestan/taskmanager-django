@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from agents.mixin import OrganisorAndLoginRequiredMixin
 import datetime
+from django.utils import timezone
 
 
 class HomeView(LoginView):
@@ -49,11 +50,12 @@ class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     def get_queryset(self):
         user = self.request.user
         if user.is_organisor:
-            queyset = Task.objects.filter(organisation=user.userprofile)
+            queryset = Task.objects.filter(organisation=user.userprofile)
         else:
-            queyset = Task.objects.filter(organisation=user.agent.organisation)
+            queryset = Task.objects.filter(
+                organisation=user.agent.organisation)
             queryset = queryset.filter(agent__user=user)
-        return queyset
+        return queryset
 
 
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
@@ -121,12 +123,19 @@ class TaskCategoryUpdateView(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         task_before_update = self.get_object()
         instance = form.save(commit=False)
-        converted_category = Category.objects.get(name="Converted")
+
+        organisation = task_before_update.organisation if hasattr(
+            task_before_update, 'organisation') else self.request.user.userprofile
+
+        # Ensure the "Converted" category exists
+        converted_category, created = Category.objects.get_or_create(
+            name="Converted", defaults={'organisation': organisation})
+
         if form.cleaned_data["category"] == converted_category:
             # update the date at which this task was converted
             if task_before_update.category != converted_category:
                 # this task has now been converted
-                instance.converted_date = datetime.datetime.now()
+                instance.converted_date = timezone.now()
         instance.save()
         return super(TaskCategoryUpdateView, self).form_valid(form)
 
@@ -324,35 +333,3 @@ class CategoryDeleteView(OrganisorAndLoginRequiredMixin, generic.DeleteView):
                 organisation=user.agent.organisation
             )
         return queryset
-
-
-class TaskCategoryUpdateView(LoginRequiredMixin, generic.UpdateView):
-    template_name = "tasks/task_category_update.html"
-    form_class = TaskCategoryUpdateForm
-
-    def get_queryset(self):
-        user = self.request.user
-        # initial queryset of tasks for the entire organisation
-        if user.is_organisor:
-            queryset = Task.objects.filter(organisation=user.userprofile)
-        else:
-            queryset = Task.objects.filter(
-                organisation=user.agent.organisation)
-            # filter for the agent that is logged in
-            queryset = queryset.filter(agent__user=user)
-        return queryset
-
-    def get_success_url(self):
-        return reverse("tasks:task_detail", kwargs={"pk": self.get_object().id})
-
-    def form_valid(self, form):
-        task_before_update = self.get_object()
-        instance = form.save(commit=False)
-        converted_category = Category.objects.get(name="Converted")
-        if form.cleaned_data["category"] == converted_category:
-            # update the date at which this task was converted
-            if task_before_update.category != converted_category:
-                # this task has now been converted
-                instance.converted_date = datetime.datetime.now()
-        instance.save()
-        return super(TaskCategoryUpdateView, self).form_valid(form)
