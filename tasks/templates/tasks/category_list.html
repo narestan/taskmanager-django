@@ -1,51 +1,39 @@
 {% extends "base.html" %} {% block content %}
 
-<section class="text-gray-700 body-font">
-  <div class="container px-5 py-24 mx-auto">
-    <div class="flex flex-col text-center w-full mb-20">
-      <h1
-        class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900"
-      >
-        Categories
-      </h1>
-      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-        These categories segment the tasks
-      </p>
-      <a href="{% url 'tasks:category-create' %}" class="hover:text-blue-500"
-        >Create a category</a
-      >
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h1 class="fw-bold text-dark mb-3">Categories</h1>
+      <p>These categories segment the tasks.</p>
+      <a href="{% url 'tasks:category-create' %}" class="btn btn-primary">
+        Create a New Category
+      </a>
     </div>
-    <div class="lg:w-2/3 w-full mx-auto overflow-auto">
-      <table class="table-auto w-full text-left whitespace-no-wrap">
-        <thead>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
           <tr>
-            <th
-              class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 rounded-tl rounded-bl"
-            >
-              Name
-            </th>
-            <th
-              class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200"
-            >
-              task Count
-            </th>
+            <th>Name</th>
+            <th>Task Count</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="px-4 py-3">Unassigned</td>
-            <td class="px-4 py-3">{{ unassigned_task_count }}</td>
+            <td>Unassigned</td>
+            <td>{{ unassigned_task_count }}</td>
           </tr>
           {% for category in category_list %}
           <tr>
-            <td class="px-4 py-3">
+            <td>
               <a
-                class="hover:text-blue-500"
                 href="{% url 'tasks:category-detail' category.pk %}"
-                >{{ category.name }}</a
+                class="text-decoration-none"
               >
+                {{ category.name }}
+              </a>
             </td>
-            <td class="px-4 py-3">TODO count</td>
+            <td>{{ category.task_count }}</td>
           </tr>
           {% endfor %}
         </tbody>

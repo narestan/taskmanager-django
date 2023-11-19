@@ -231,35 +231,38 @@ class CategoryListView(LoginRequiredMixin, generic.ListView):
     context_object_name = "category_list"
 
     def get_context_data(self, **kwargs):
-        context = super(CategoryListView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         user = self.request.user
 
+        # Get the original queryset of categories
+        categories = context['category_list']
+
+        # Update context with categories and their task counts
+        categories_with_task_count = []
+        for category in categories:
+            category.task_count = Task.objects.filter(
+                category=category).count()
+            categories_with_task_count.append(category)
+
+        context['category_list'] = categories_with_task_count
+
         if user.is_organisor:
-            queryset = Task.objects.filter(
-                organisation=user.userprofile
-            )
+            queryset = Task.objects.filter(organisation=user.userprofile)
         else:
             queryset = Task.objects.filter(
-                organisation=user.agent.organisation
-            )
+                organisation=user.agent.organisation)
 
-        context.update({
-            "unassigned_task_count": queryset.filter(category__isnull=True).count()
-        })
+        context['unassigned_task_count'] = queryset.filter(
+            category__isnull=True).count()
+
         return context
 
     def get_queryset(self):
         user = self.request.user
-        # initial queryset of tasks for the entire organisation
         if user.is_organisor:
-            queryset = Category.objects.filter(
-                organisation=user.userprofile
-            )
+            return Category.objects.filter(organisation=user.userprofile)
         else:
-            queryset = Category.objects.filter(
-                organisation=user.agent.organisation
-            )
-        return queryset
+            return Category.objects.filter(organisation=user.agent.organisation)
 
 
 class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
@@ -278,6 +281,14 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
                 organisation=user.agent.organisation
             )
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(CategoryDetailView, self).get_context_data(**kwargs)
+        # Get the current category from the context
+        category = context['category']
+        # Retrieve tasks related to the category
+        context['tasks'] = Task.objects.filter(category=category)
+        return context
 
 
 class CategoryCreateView(OrganisorAndLoginRequiredMixin, generic.CreateView):

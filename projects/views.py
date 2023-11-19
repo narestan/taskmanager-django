@@ -4,17 +4,18 @@ from .models import Project, Document
 from django.views import generic
 from projects.forms import ProjectModelForm, DocumentForm
 from agents.mixin import OrganisorAndLoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # CRUD Projects
 
 
-class ProjectListView(generic.ListView):
+class ProjectListView(LoginRequiredMixin, generic.ListView):
     model = Project
     context_object_name = 'projects'
     template_name = 'projects/project_list.html'
 
 
-class ProjectDetailView(generic.DetailView):
+class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
     model = Project
     context_object_name = 'project'
     template_name = 'projects/project_detail.html'
@@ -28,7 +29,7 @@ class ProjectCreateView(OrganisorAndLoginRequiredMixin, generic.CreateView):
         return reverse('projects:project_list')
 
 
-class ProjectUpdateView(generic.UpdateView):
+class ProjectUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Project
     form_class = ProjectModelForm
     template_name = 'projects/project_update.html'
@@ -37,7 +38,7 @@ class ProjectUpdateView(generic.UpdateView):
         return reverse('project_detail', kwargs={'pk': self.object.pk})
 
 
-class ProjectDeleteView(generic.DeleteView):
+class ProjectDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Project
     context_object_name = 'project'
     template_name = 'projects/project_delete.html'
@@ -46,7 +47,7 @@ class ProjectDeleteView(generic.DeleteView):
         return reverse('project_list')
 
 
-class ProjectDocumentCreat(generic.CreateView):
+class ProjectDocumentCreat(LoginRequiredMixin, generic.CreateView):
     form_class = DocumentForm
     template_name = 'projects/document_create.html'
 
@@ -68,7 +69,7 @@ class ProjectDocumentCreat(generic.CreateView):
         return super().form_valid(form)
 
 
-class ProjectDocumentDelete(generic.DeleteView):
+class ProjectDocumentDelete(LoginRequiredMixin, generic.DeleteView):
     template_name = 'projects/document_delete.html'
 
     def get_object(self, queryset=None):
