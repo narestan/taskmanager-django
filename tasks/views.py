@@ -13,7 +13,6 @@ import datetime
 from django.utils import timezone
 from django.views.generic import FormView
 from django.urls import reverse_lazy, reverse
-from django.urls import reverse
 
 
 class HomeView(LoginView):
