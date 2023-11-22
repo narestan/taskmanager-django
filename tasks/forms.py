@@ -25,7 +25,7 @@ class TaskModelForm(forms.ModelForm):
             'date_start': 'تاریخ شروع',
             'date_end': 'تاریخ پایان',
             'category': 'دسته‌بندی',
-            'project': 'پروژه',
+            'project': 'شماره ثبت سفارش',
         }
         widgets = {
             'date_start': AdminSplitjDateTime(),
@@ -81,3 +81,8 @@ class FollowUpModelForm(forms.ModelForm):
             'notes': 'یادداشت‌ها',
             'file': 'فایل',
         }
+
+
+# search form
+class ProjectSearchForm(forms.Form):
+    project_id = forms.IntegerField(label='Project ID')

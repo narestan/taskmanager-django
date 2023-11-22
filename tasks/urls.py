@@ -2,7 +2,7 @@ from django.urls import path
 from tasks.views import (
     TaskCreateView, TaskDeleteView, TaskDetailView, CategoryDetailView,
     TaskListView, TaskUpdateView, CategoryListView, CategoryUpdateView, TaskCategoryUpdateView,
-    CategoryDeleteView, CategoryCreateView, FollowUpCreateView, FollowUpUpdateView, FollowUpDeleteView
+    CategoryDeleteView, CategoryCreateView, FollowUpCreateView, FollowUpUpdateView, FollowUpDeleteView, ProjectSearchView
 
 )
 
@@ -32,4 +32,5 @@ urlpatterns = [
          FollowUpDeleteView.as_view(), name='task-followup-delete'),
     path('<int:pk>/category/',
          TaskCategoryUpdateView.as_view(), name='task-category-update'),
+    path('search/', ProjectSearchView.as_view(), name='project_search'),
 ]

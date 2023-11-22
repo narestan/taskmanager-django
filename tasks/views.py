@@ -1,16 +1,19 @@
 from typing import Any
 from django.db import models
-from django.shortcuts import render, reverse
+from django.shortcuts import render
 from tasks.models import Task, Agent, Category, FollowUp
 from django.views import generic
 from django.db.models.query import QuerySet
-from tasks.forms import TaskModelForm, FollowUpModelForm, AssignAgentForm, TaskCategoryUpdateForm, CategoryModelForm, FollowUpModelForm
+from tasks.forms import TaskModelForm, FollowUpModelForm, AssignAgentForm, TaskCategoryUpdateForm, CategoryModelForm, FollowUpModelForm, ProjectSearchForm
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from agents.mixin import OrganisorAndLoginRequiredMixin
 import datetime
 from django.utils import timezone
+from django.views.generic import FormView
+from django.urls import reverse_lazy, reverse
+from django.urls import reverse
 
 
 class HomeView(LoginView):
@@ -344,3 +347,33 @@ class CategoryDeleteView(OrganisorAndLoginRequiredMixin, generic.DeleteView):
                 organisation=user.agent.organisation
             )
         return queryset
+
+
+def project_search_view(request):
+    form = ProjectSearchForm(request.GET or None)
+    tasks = None
+
+    if form.is_valid():
+        project_id = form.cleaned_data['project_id']
+        tasks = Task.objects.filter(project__proforma_num_reg=project_id)
+
+    return render(request, 'tasks/project_search.html', {'form': form, 'tasks': tasks})
+
+
+class ProjectSearchView(FormView):
+    template_name = 'tasks/project_search.html'
+    form_class = ProjectSearchForm
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectSearchView, self).get_context_data(**kwargs)
+        form = self.form_class(self.request.GET or None)
+        context['form'] = form
+
+        if form.is_valid():
+            project_id = form.cleaned_data['project_id']
+            context['tasks'] = Task.objects.filter(
+                project__proforma_num_reg=project_id)
+        else:
+            context['tasks'] = None
+
+        return context

@@ -13,7 +13,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('agents/', include('agents.urls', namespace='agents')),
     path('projects/', include('projects.urls', namespace='projects')),
-
 ]
 
 if settings.DEBUG:

@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import User, Task, Agent, UserProfile, Category, FollowUp
+from projects.models import Currency
 
 
 class TaskAdmin(admin.ModelAdmin):
@@ -15,6 +16,7 @@ class TaskAdmin(admin.ModelAdmin):
     search_fields = ['task_name']
 
 
+admin.site.register(Currency)
 admin.site.register(Category)
 admin.site.register(User)
 admin.site.register(UserProfile)

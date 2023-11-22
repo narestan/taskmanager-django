@@ -1,18 +1,37 @@
 from django.db import models
 
 
-class Project(models.Model):
-    name = models.CharField(max_length=255)
-    floor_number = models.PositiveIntegerField()
-    apartment_number = models.PositiveIntegerField()
-    address = models.CharField(max_length=255)
-    # document = models.FileField(
-    #     upload_to='project_documents/', blank=True, null=True)
-    # You can add more fields as required
-    # Adding Jalali Date fields
+class Currency(models.Model):
+    USD = 'USD'
+    EUR = 'EUR'
+    AED = 'AED'
+
+    CURRENCY_CHOICES = [
+        (USD, 'US Dollars'),
+        (EUR, 'Euro'),
+        (AED, 'Dirham of Emirates')
+    ]
+
+    code = models.CharField(
+        max_length=3, choices=CURRENCY_CHOICES, unique=True, primary_key=True)
+    name = models.CharField(max_length=50)
+    symbol = models.CharField(max_length=10, blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.code})"
+
+
+class Project(models.Model):
+    name = models.CharField(max_length=100)
+    proforma_num_reg = models.IntegerField(primary_key=True)
+    proforma_name = models.CharField(max_length=50)
+    price = models.PositiveIntegerField()
+    weight = models.PositiveIntegerField()
+    currency = models.ForeignKey(
+        Currency, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.proforma_num_reg)
 
 
 class Document(models.Model):

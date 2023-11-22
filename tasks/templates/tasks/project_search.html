@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block content %}{% load crispy_forms_tags %}
+<a href="/tasks/">بازگشت به فهرست کارها</a>
+<div class="container">
+  <form method="get">
+    {% csrf_token %} {{ form|crispy }}
+    <button type="submit">جستجو</button>
+  </form>
+
+  {{ form.media }}
+  <hr />
+  {% if tasks %}
+  <ul>
+    {% for task in tasks %}
+    <li>
+      <a href="{% url 'tasks:task_detail' task.id %}">{{ task.task_name }}</a> -
+      {{ task.info }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>هیچ کاری مربوط به این پروژه‌ پیدا نشد</p>
+  {% endif %}
+</div>
+{% endblock %}

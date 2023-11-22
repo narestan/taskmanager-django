@@ -1,53 +1,40 @@
-{% extends "base.html" %}{% block content %}{% load crispy_forms_tags %}
+{% extends "base.html" %} {% block content %} {% load crispy_forms_tags %}
 
-<section class="py-5">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <h2 class="text-muted small">{{ agent.user.username }}</h2>
-        <h1 class="text-dark display-4 mb-4">{{ agent.user.last_name }}</h1>
-        <ul class="nav nav-tabs mb-4">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'agents:agent_detail' agent.pk %}">
-              Overview
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link active"
-              href="{% url 'agents:agent_update' agent.pk %}"
-            >
-              Edit Info
-            </a>
-          </li>
-        </ul>
-        <!-- Form Start -->
-        <form method="post">
-          {% csrf_token %} {{ form|crispy }}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h3 class="h3 text-dark mb-3">{{ agent.agent_name }}</h3>
+      <nav class="nav nav-pills flex-column flex-sm-row mb-4">
+        <a
+          class="flex-sm-fill text-sm-center nav-link"
+          href="{% url 'agents:agent_detail' agent.pk %}"
+          >مرور کلی</a
+        >
 
-          <!-- Buttons -->
-          <div class="d-flex mb-4">
-            <button type="submit" class="btn btn-primary">Update</button>
-            
-              <!-- SVG or Font Awesome icon can be used here -->
-              <i class="fas fa-heart"></i>
-              <!-- This uses Font Awesome's heart icon -->
-            </button>
-          </div>
-        </form>
-        <!-- Form End -->
+        <a
+          class="flex-sm-fill text-sm-center nav-link {% if request.resolver_match.url_name == 'agent_update' %}active{% endif %}"
+          href="{% url 'agents:agent_update' agent.pk %}"
+          >به‌روزرسانی</a
+        >
+      </nav>
 
-        <!-- Delete Link -->
-        <div class="d-flex justify-content-end">
-          <a
-            href="{% url 'agents:agent_delete' agent.pk %}"
-            class="btn btn-danger"
-            >Delete</a
-          >
-        </div>
-      </div>
+      <form method="post" enctype="multipart/form-data" class="mb-4">
+        {% csrf_token %} {{ form|crispy }}
+        <button type="submit" class="btn btn-primary w-100 mt-2">ارسال</button>
+      </form>
+      {{ form.media }}
+
+      <hr />
+
+      <a
+        href="{% url 'agents:agent_delete' agent.pk %}"
+        class="btn btn-danger"
+        onclick="return confirm('می خواهید کاربر را پاک کنید؟');"
+      >
+        پاک کردن کاربر</a
+      >
     </div>
   </div>
-</section>
+</div>
 
 {% endblock content %}

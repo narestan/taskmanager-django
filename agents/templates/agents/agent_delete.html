@@ -1,11 +1,15 @@
 {% extends "base.html" %} {% block content %}
-<a href="{% url 'agents:agent_list' %}"> back to list </a>
+<a href="{% url 'agents:agent_list' %}"> بازگشت به کاربران </a>
 <div class="container">
-  <h2>Are you sure you want to delete "{{ object }}"?</h2>
+  <br />
+  <h2>"{{ object }}" را اطمینان دارید که می‌خواهید پاک کنید؟</h2>
   <form method="post">
     {% csrf_token %}
-    <button type="submit">Delete</button>
-    <a href="{% url 'tasks:task_list' %}">Cancel</a>
+    <br />
+    <button type="submit">پاک کردن</button>
+    <button type="submit">
+      <a href="{% url 'agents:agent_list' %}">لغو</a>
+    </button>
   </form>
 </div>
 {% endblock %}

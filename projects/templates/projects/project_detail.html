@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block content %}
 
-<div class="container py-5">
+<div class="container py-5" dir="rtl">
   <div class="row justify-content-center">
     <!-- Main Content Column -->
     <div class="col-lg-8 shadow-sm">
@@ -11,30 +11,38 @@
         <a
           class="flex-sm-fill text-sm-center nav-link active"
           href="{% url 'projects:project_detail' project.pk %}"
-          >Overview</a
+          >جزییات</a
         >
         <a
           class="flex-sm-fill text-sm-center nav-link"
           href="{% url 'projects:project_update' project.pk %}"
-          >Update Details</a
-        >
+          >به‌روزرسانی
+        </a>
       </nav>
 
       <!-- Project Details -->
-      <div class="list-group">
-        <div class="list-group-item">
-          <span class="text-secondary">Number of Floors:</span>
-          <span class="float-end text-dark">{{ project.floor_number }}</span>
+      <div class="list-group d-flex">
+        <div class="list-group-item d-flex justify-content-between">
+          <span class="text-secondary">نام کالا:</span>
+          <span class="text-dark">{{ project.name }}</span>
         </div>
-        <div class="list-group-item">
-          <span class="text-secondary">Info:</span>
-          <span class="float-end text-dark"
-            >{{ project.apartment_number }}</span
-          >
+        <div class="list-group-item d-flex justify-content-between">
+          <span class="text-secondary">شماره ثبت سفارش :</span>
+          <span class="text-dark">{{ project.proforma_num_reg}}</span>
         </div>
-        <div class="list-group-item">
-          <span class="text-secondary">Address:</span>
-          <span class="float-end text-dark">{{ project.address }}</span>
+        <div class="list-group-item d-flex justify-content-between">
+          <span class="text-secondary">شماره پروفرما : </span>
+          <span class="text-dark">{{ project.proforma_name }}</span>
+        </div>
+        <div class="list-group-item d-flex justify-content-between">
+          <span class="text-secondary">مبلغ : </span>
+          <span class="text-dark">{{ project.price }}</span>
+          <span class="text-dark">{{ project.currency }}</span>
+        </div>
+        <div class="list-group-item d-flex justify-content-between">
+          <span class="text-secondary">وزن : </span>
+          <span class="text-dark">{{ project.weight }}</span>
+          <span class="text-dark">کیلوگرم</span>
         </div>
       </div>
     </div>

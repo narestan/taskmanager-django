@@ -2,9 +2,9 @@
 
 
 {% block content %}
-  <a href="{% url 'agents:agent_list' %}"> back to list </a>
+  <a href="{% url 'agents:agent_list' %}"> بازگشت به فهرست کاربران </a>
   <div class="container">
-    <h1>Create a New Agent</h1>
+    <h1>افزودن کاربر جدید</h1>
     <form method="post">
       {% csrf_token %}
       {{ form|crispy }}

@@ -1,52 +1,59 @@
 {% extends "base.html" %} {% block content %}
 
-<section class="py-5">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <h2 class="text-muted small">AGENT</h2>
-        <h1 class="text-dark display-4 mb-4">{{ agent.user.last_name }}</h1>
-        <ul class="nav nav-tabs mb-4">
-          <li class="nav-item">
-            <a
-              class="nav-link active"
-              href="{% url 'agents:agent_detail' agent.pk %}"
-            >
-              Overview
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'agents:agent_update' agent.pk %}">
-              Edit Info
-            </a>
-          </li>
-        </ul>
-        <div class="mb-3">
-          <span class="text-muted">First Name:</span>
-          <span class="float-right text-dark">
-            {{ agent.user.first_name }}
-          </span>
-        </div>
-        <div class="mb-3">
-          <span class="text-muted">Last Name:</span>
-          <span class="float-right text-dark">
-            {{ agent.user.last_name }}
-          </span>
-        </div>
-        <div class="mb-3">
-          <span class="text-muted">Position:</span>
-          <span class="float-right text-dark"> {{ agent.user.position }} </span>
-        </div>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="mb-4">
+        <h3 class="h3 text-dark">{{ agent.agent_name }}</h3>
+      </div>
 
-        <div class="mb-3">
-          <span class="text-muted">Mobile Number:</span>
-          <span class="float-right text-dark"
-            >{{ agent.user.mobile_number}}</span
-          >
+      <nav class="nav nav-pills flex-column flex-sm-row border-bottom mb-4">
+        <a
+          class="flex-sm-fill text-sm-center nav-link active"
+          href="{% url 'agents:agent_detail' agent.pk %}"
+          >مرور کلی</a
+        >
+
+        <a
+          class="flex-sm-fill text-sm-center nav-link"
+          href="{% url 'agents:agent_update' agent.pk %}"
+          >به روز رسانی</a
+        >
+      </nav>
+
+      <div class="list-group">
+        <div class="list-group-item d-flex justify-content-between">
+          <span class="text-secondary">نام کاربری: </span>
+          <span class="text-dark">{{ agent.user.usermame }}</span>
+        </div>
+        <div class="list-group-item d-flex justify-content-between">
+          <span class="text-secondary"> نام:</span>
+          <span class="text-dark">{{ agent.user.first_name }}</span>
+        </div>
+        <div class="list-group-item d-flex justify-content-between">
+          <span class="text-secondary"> نام خانوادگی :</span>
+          <span class="text-dark">{{ agent.user.last_name }}</span>
+        </div>
+        <div class="list-group-item d-flex justify-content-between">
+          <span class="text-secondary">سمت :</span>
+          <span class="text-dark">{{ agent.user.position }}</span>
+        </div>
+        <div class="list-group-item d-flex justify-content-between">
+          <span class="text-secondary">تلفن همراه :</span>
+          <span class="text-dark">{{ agent.user.mobile_number }}</span>
         </div>
       </div>
+      <br />
+      <a
+        href="{% url 'agents:agent_delete' agent.pk %}"
+        class="btn btn-danger"
+        onclick="return confirm('می خواهید کاربر را پاک کنید؟');"
+      >
+        پاک کردن کاربر</a
+      >
+
+      <hr />
     </div>
   </div>
-</section>
-
+</div>
 {% endblock content %}

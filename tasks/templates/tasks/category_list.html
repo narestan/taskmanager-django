@@ -3,10 +3,9 @@
 <section class="py-5">
   <div class="container">
     <div class="text-center mb-5">
-      <h1 class="fw-bold text-dark mb-3">Categories</h1>
-      <p>These categories segment the tasks.</p>
+      <h1 class="fw-bold text-dark mb-3">وضعیت ها</h1>
       <a href="{% url 'tasks:category-create' %}" class="btn btn-primary">
-        Create a New Category
+        افزودن دسته بندی جدید
       </a>
     </div>
 
@@ -14,13 +13,13 @@
       <table class="table table-bordered table-hover">
         <thead class="table-light">
           <tr>
-            <th>Name</th>
-            <th>Task Count</th>
+            <th>نام</th>
+            <th>تعداد کاد</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Unassigned</td>
+            <td>الصاق نشده</td>
             <td>{{ unassigned_task_count }}</td>
           </tr>
           {% for category in category_list %}

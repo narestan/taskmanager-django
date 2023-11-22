@@ -19,6 +19,10 @@ class AgentModelForm(forms.ModelForm):
             'position',
             'mobile_number',
         )
+        labels = {
+            'position': 'سمت',
+            'mobile_number': 'شماره همراه',
+        }
 
     def save(self, commit=True):
         user = super(AgentModelForm, self).save(commit=False)

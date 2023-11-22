@@ -1,13 +1,13 @@
 {% extends "base.html" %} 
 
 
-{% block content %}
+{% block content %}{% load crispy_forms_tags %}
   <a href="/projects/"> بازگشت به فهرست </a>
   <div class="container">
     <h1>افزودن پروژه‌ جدید</h1>
     <form method="post">
       {% csrf_token %}
-      {{ form.as_p }}
+      {{ form|crispy }}
       <button type="submit">ارسال</button>
   </div>
 

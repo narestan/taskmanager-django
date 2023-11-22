@@ -7,13 +7,11 @@ from django_jalali.db.models import jDateTimeField
 
 
 class User(AbstractUser):
-    KARFARMA = 'karfarma'
-    ENGINEER = 'engineer'
-    EMPLOYEE = 'employee'
+    mcom = 'Commercial Manage'
+    com = 'expert'
     POSITION_CHOICES = [
-        (KARFARMA, 'کارفرما'),
-        (ENGINEER, 'مهندس'),
-        (EMPLOYEE, 'پیمانکار'),
+        (mcom, 'مدیر بازرگانی'),
+        (com, 'کارشناس'),
     ]
 
     is_organisor = models.BooleanField(default=True)
