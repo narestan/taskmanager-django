@@ -2,10 +2,10 @@
 
 <div class="max-w-lg mx-auto">
   <a class="hover:text-blue-500" href="{% url 'tasks:task_detail' task.pk %}"
-    >Go back to {{ task }}</a
+    >بازگشت به {{ task }}</a
   >
   <div class="py-5 border-t border-gray-200 shadow-sm">
-    <h1 class="text-4xl text-gray-800">Create a new followup</h1>
+    <h1 class="text-4xl text-gray-800">افزودن یادداشت جدید</h1>
   </div>
   <form method="post" class="mt-5" enctype="multipart/form-data">
     {% csrf_token %} {{ form|crispy }}
@@ -13,7 +13,7 @@
       type="submit"
       class="w-full text-blue bg-blue-500 hover:bg-blue-600 px-3 py-2 rounded-md"
     >
-      Submit
+      افزودن
     </button>
   </form>
 </div>

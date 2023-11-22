@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     # Third Party apps
     'crispy_forms',
     'crispy_bootstrap5',
+    'django_jalali',
     # Local apps
     'tasks',
     'agents',

@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from projects.models import Project
+import jdatetime
+from django_jalali.db.models import jDateTimeField
 
 
 class User(AbstractUser):
@@ -38,9 +40,9 @@ class Task(models.Model):
     agent = models.ForeignKey(
         'Agent', on_delete=models.SET_NULL, null=True)
     organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    created_at = models.DateField(auto_now_add=True)
-    date_start = models.DateField(null=True, blank=True)
-    date_end = models.DateField(null=True, blank=True)
+    created_at = jDateTimeField(auto_now_add=True)
+    date_start = jDateTimeField(null=True, blank=True)
+    date_end = jDateTimeField(null=True, blank=True)
     category = models.ForeignKey(
         "Category", related_name="tasks", null=True, blank=True, on_delete=models.SET_NULL)
     converted_date = models.DateTimeField(null=True, blank=True)
@@ -84,7 +86,7 @@ def handle_upload_follow_ups(instance, filename):
 class FollowUp(models.Model):
     task = models.ForeignKey(
         Task, related_name="followups", on_delete=models.CASCADE)
-    date_added = models.DateTimeField(auto_now_add=True)
+    date_added = jDateTimeField(auto_now_add=True)
     notes = models.TextField(blank=True, null=True)
     file = models.FileField(null=True, blank=True,
                             upload_to=handle_upload_follow_ups)

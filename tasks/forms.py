@@ -1,6 +1,8 @@
 from django import forms
 from tasks.models import Task, Agent, Category, FollowUp
 from projects.models import Project
+from django_jalali.forms import jDateTimeField
+from django_jalali.admin.widgets import AdminSplitjDateTime
 
 
 class TaskModelForm(forms.ModelForm):
@@ -16,12 +18,20 @@ class TaskModelForm(forms.ModelForm):
             'project',
 
         )
-
-    # def clean_first_name(self):
-    #     data = self.cleaned_data["first_name"]
-    #     # if data != "Joe":
-    #     #     raise ValidationError("Your name is not Joe")
-    #     return data
+        labels = {
+            'task_name': 'نام کار',
+            'info': 'توضیحات',
+            'agent': 'کاربر',
+            'date_start': 'تاریخ شروع',
+            'date_end': 'تاریخ پایان',
+            'category': 'دسته‌بندی',
+            'project': 'پروژه',
+        }
+        widgets = {
+            'date_start': AdminSplitjDateTime(),
+            'date_end': AdminSplitjDateTime(),
+            # Add other widgets if necessary
+        }
 
     def clean(self):
         pass
@@ -45,6 +55,7 @@ class TaskCategoryUpdateForm(forms.ModelForm):
         )
         labels = {
             'project': 'Project Name',
+            'category': 'وضعیت',
         }
 
 
@@ -54,6 +65,9 @@ class CategoryModelForm(forms.ModelForm):
         fields = (
             'name',
         )
+        labels = {
+            'name': 'نام',
+        }
 
 
 class FollowUpModelForm(forms.ModelForm):
@@ -63,3 +77,7 @@ class FollowUpModelForm(forms.ModelForm):
             'notes',
             'file'
         )
+        labels = {
+            'notes': 'یادداشت‌ها',
+            'file': 'فایل',
+        }

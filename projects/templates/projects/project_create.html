@@ -2,13 +2,13 @@
 
 
 {% block content %}
-  <a href="/projects/"> back to list </a>
+  <a href="/projects/"> بازگشت به فهرست </a>
   <div class="container">
-    <h1>Create a New Project</h1>
+    <h1>افزودن پروژه‌ جدید</h1>
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit">submit</button>
+      <button type="submit">ارسال</button>
   </div>
 
 {% endblock %}

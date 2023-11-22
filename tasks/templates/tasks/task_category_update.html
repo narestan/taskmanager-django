@@ -10,23 +10,23 @@
         <a
           class="flex-sm-fill text-sm-center nav-link {% if request.resolver_match.url_name == 'task_detail' %}active{% endif %}"
           href="{% url 'tasks:task_detail' task.pk %}"
-          >Overview</a
+          >نمایش</a
         >
         <a
           class="flex-sm-fill text-sm-center nav-link {% if request.resolver_match.url_name == 'task-category-update' %}active{% endif %}"
           href="{% url 'tasks:task-category-update' task.pk %}"
-          >Category</a
+          >وضعیت</a
         >
         <a
           class="flex-sm-fill text-sm-center nav-link {% if request.resolver_match.url_name == 'task_update' %}active{% endif %}"
           href="{% url 'tasks:task_update' task.pk %}"
-          >Update Details</a
+          >به‌روزرسانی</a
         >
       </nav>
 
       <form method="post" class="mb-4">
         {% csrf_token %} {{ form|crispy }}
-        <button type="submit" class="btn btn-primary w-100 mt-2">Submit</button>
+        <button type="submit" class="btn btn-primary w-100 mt-2">ارسال</button>
       </form>
     </div>
   </div>

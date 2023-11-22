@@ -1,10 +1,11 @@
 from typing import Any
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Project, Document
 from django.views import generic
 from projects.forms import ProjectModelForm, DocumentForm
 from agents.mixin import OrganisorAndLoginRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse
 
 # CRUD Projects
 
@@ -44,7 +45,7 @@ class ProjectDeleteView(LoginRequiredMixin, generic.DeleteView):
     template_name = 'projects/project_delete.html'
 
     def get_success_url(self):
-        return reverse('project_list')
+        return reverse('projects:project_list')
 
 
 class ProjectDocumentCreat(LoginRequiredMixin, generic.CreateView):

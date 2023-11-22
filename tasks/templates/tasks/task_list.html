@@ -1,14 +1,14 @@
 {% extends "base.html" %} {% block content %}
 
-<div class="container mt-5">
+<div class="container mt-5" dir="rtl">
   <div class="row justify-content-between mb-3">
     <div class="col">
-      <h1>List of Tasks</h1>
+      <h1>فهرست کارها</h1>
     </div>
     {% if request.user.is_organisor %}
     <div class="col-auto">
       <a href="{% url 'tasks:task_create' %}" class="btn btn-primary">
-        Create a New Task
+        افزودن کار جدید
       </a>
     </div>
     {% endif %}
@@ -20,15 +20,16 @@
     {% for task in tasks %}
     <div class="col">
       <div class="card h-100">
+        <div class="card-header">{{ task.task_name }}</div>
         <div class="card-body">
-          <h5 class="card-title">{{ task.task_name }}</h5>
+          <h5 class="card-title">وضعیت : {{ task.category }}</h5>
+          <p class="card-text"></p>
           <p class="card-text">{{ task.agent }}</p>
-          <p class="card-text">{{ task.explain_task }}</p>
           <a
             href="{% url 'tasks:task_detail' task.pk %}"
-            class="btn btn-secondary"
+            class="btn btn-primary btn-sm"
           >
-            More Details
+            جزئیات بیشتر
           </a>
         </div>
       </div>

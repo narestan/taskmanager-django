@@ -3,12 +3,12 @@
 <div class="container mt-5">
   <div class="row justify-content-between mb-3">
     <div class="col">
-      <h1>List of Projects</h1>
+      <h1>فهرست پروژه‌</h1>
     </div>
     {% if request.user.is_organisor %}
     <div class="col-auto">
       <a href="{% url 'projects:project_create' %}" class="btn btn-primary">
-        Create a New Project
+        افزودن پروژه‌ جدید
       </a>
     </div>
     {% endif %}
@@ -27,7 +27,7 @@
             href="{% url 'projects:project_detail' project.pk %}"
             class="btn btn-secondary"
           >
-            More Details
+            توضیحات بیشتر
           </a>
         </div>
       </div>
